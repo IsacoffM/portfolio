@@ -1,0 +1,542 @@
+{
+    "results": [
+        {
+            "id": "11111",
+            "name": "Company Name 1",
+            "description": "Description 1",
+            "info": {
+                "address": {
+                    "street": "Address 1",
+                    "city": "City 1",
+                    "state": "State 1",
+                    "zip": "11111",
+                    "country": "Country 1"
+                },
+                "telephone": "Telephone 1",
+                "emailText": "Email 1",
+                "email": "email@email1.com",
+                "webText": "Web 1",
+                "web": "http://www.website1.com"
+            },
+            "category": {
+                "id": "11111",
+                "name": "Category 1",
+                "key": "category1"
+            },
+            "filters": [
+                {
+                    "id": "111111",
+                    "name": "Filter 1",
+                    "key": "filter1a"
+                },
+                {
+                    "id": "333333",
+                    "name": "Filter 3",
+                    "key": "filter1b"
+                }
+            ],
+            "primaryLocation": {
+                "type": 0,
+                "coords": {
+                    "lat": 32.776664,
+                    "lng": -96.796988,
+                    "name": "dallas, tx"
+                }
+            },
+            "authorizedLocations": [
+                {
+                    "type": 1,
+                    "coords": [
+                        {
+                            "lat": 32.975642,
+                            "lng": -96.889964,
+                            "name": "carrolton, tx"
+                        },
+                        {
+                            "lat": 33.019843,
+                            "lng": -96.698886,
+                            "name": "plano, tx"
+                        },
+                        {
+                            "lat": 32.766796,
+                            "lng": -96.599159,
+                            "name": "mesquite, tx"
+                        },
+                        {
+                            "lat": 32.589700,
+                            "lng": -96.857074,
+                            "name": "desoto, tx"
+                        },
+                        {
+                            "lat": 32.745964,
+                            "lng": -96.997785,
+                            "name": "grand prarie, tx"
+                        }
+                    ]
+                },
+                {
+                    "type": 2,
+                    "coords": {
+                        "lat": 32.735687,
+                        "lng": -97.108066,
+                        "name": "arlington, tx"
+                    },
+                    "radius": 0.14
+                }
+            ]
+        },
+        {
+            "id": "22222",
+            "name": "Company Name 2",
+            "description": "Description 2",
+            "info": {
+                "address": {
+                    "street": "Address 2",
+                    "city": "City 2",
+                    "state": "State 2",
+                    "zip": "22222",
+                    "country": "Country 2"
+                },
+                "telephone": "Telephone 2",
+                "emailText": "Email 2",
+                "email": "email@email2.com",
+                "webText": "Web 2",
+                "web": "http://www.website2.com"
+            },
+            "category": {
+                "id": "22222",
+                "name": "Category 2",
+                "key": "category2"
+            },
+            "filters": [
+                {
+                    "id": "111111",
+                    "name": "Filter 1",
+                    "key": "filter1a"
+                },
+                {
+                    "id": "333333",
+                    "name": "Filter 3",
+                    "key": "filter1c"
+                }
+            ],
+            "primaryLocation": {
+                "type": 0,
+                "coords": {
+                    "lat": 42.360082,
+                    "lng": -71.058880,
+                    "name": "boston, ma"
+                }
+            },
+            "authorizedLocations": [
+                {
+                    "type": 0,
+                    "coords": {
+                        "lat": 42.373616,
+                        "lng": -71.109734,
+                        "name": "cambridge, ma"
+                    }
+                },
+                {
+                    "type": 1,
+                    "coords": [
+                        {
+                            "lat": 42.338144,
+                            "lng": -71.047577,
+                            "name": "south boston, ma"
+                        },
+                        {
+                            "lat": 42.350265,
+                            "lng": -71.080976,
+                            "name": "back bay boston, ma"
+                        },
+                        {
+                            "lat": 42.315198,
+                            "lng": -71.091375,
+                            "name": "roxbury, ma"
+                        }
+                    ]
+                },
+                {
+                    "type": 2,
+                    "coords": {
+                        "lat": 42.373616,
+                        "lng": -71.109734,
+                        "name": "cambridge, ma"
+                    },
+                    "radius": 0.077
+                }
+            ]
+        },
+        {
+            "id": "33333",
+            "name": "Company Name 3",
+            "description": "Description 3",
+            "info": {
+                "address": {
+                    "street": "Address 3",
+                    "city": "City 3",
+                    "state": "State 3",
+                    "zip": "33333",
+                    "country": "Country 3"
+                },
+                "telephone": "Telephone 3",
+                "emailText": "Email 3",
+                "email": "email@email3.com",
+                "webText": "Web 3",
+                "web": "http://www.website3.com"
+            },
+            "category": {
+                "id": "333333",
+                "name": "Category 3",
+                "key": "category3"
+            },
+            "filters": [
+                {
+                    "id": "111111",
+                    "name": "Filter 1",
+                    "key": "filter1b"
+                },
+                {
+                    "id": "222222",
+                    "name": "Filter 2",
+                    "key": "filter1c"
+                },
+                {
+                    "id": "333333",
+                    "name": "Filter 3",
+                    "key": "filter1d"
+                }
+            ],
+            "primaryLocation": {
+                "type": 0,
+                "coords": {
+                    "lat": 34.052234,
+                    "lng": -118.243685,
+                    "name": "los angeles, ca"
+                }
+            },
+            "authorizedLocations": [
+                {
+                    "type": 1,
+                    "coords": [
+                        {
+                            "lat": 34.019454,
+                            "lng": -118.491191,
+                            "name": "santa monica, ca"
+                        },
+                        {
+                            "lat": 34.147785,
+                            "lng": -118.144516,
+                            "name": "pasadena, ca"
+                        },
+                        {
+                            "lat": 33.940109,
+                            "lng": -118.133159,
+                            "name": "downey, ca"
+                        },
+                        {
+                            "lat": 33.835849,
+                            "lng": -118.340629,
+                            "name": "torrance, ca"
+                        }
+                    ]
+                },
+                {
+                    "type": 2,
+                    "coords": {
+                        "lat": 34.052234,
+                        "lng": -118.243685,
+                        "name": "los angeles, ca"
+                    },
+                    "radius": 0.12222222
+                }
+            ]
+        },
+        {
+            "id": "44444",
+            "name": "Company Name 4",
+            "description": "Description 4",
+            "info": {
+                "address": {
+                    "street": "Address 4",
+                    "city": "City 4",
+                    "state": "State 4",
+                    "zip": "44444",
+                    "country": "Country 4"
+                },
+                "telephone": "Telephone 4",
+                "emailText": "Email 4",
+                "email": "email@email4.com",
+                "webText": "Web 4",
+                "web": "http://www.website4.com"
+            },
+            "category": {
+                "id": "44444",
+                "name": "Category 4",
+                "key": "category4"
+            },
+            "filters": [
+                {
+                    "id": "111111",
+                    "name": "Filter 1",
+                    "key": "filter1d"
+                },
+                {
+                    "id": "222222",
+                    "name": "Filter 2",
+                    "key": "filter1c"
+                }
+            ],
+            "primaryLocation": {
+                "type": 0,
+                "coords": {
+                    "lat": 40.712775,
+                    "lng": -74.005973,
+                    "name": "new york, ny"
+                }
+            },
+            "authorizedLocations": [
+                {
+                    "type": 1,
+                    "coords": [
+                        {
+                            "lat": 40.735657,
+                            "lng": -74.172367,
+                            "name": "newark, nj"
+                        },
+                        {
+                            "lat": 40.663992,
+                            "lng": -74.210701,
+                            "name": "elizabeth, nj"
+                        },
+                        {
+                            "lat": 40.626164,
+                            "lng": -74.032950,
+                            "name": "bay ridge, ny"
+                        },
+                        {
+                            "lat": 40.678178,
+                            "lng": -73.944158,
+                            "name": "brooklyn, ny"
+                        },
+                        {
+                            "lat": 40.783060,
+                            "lng": -73.971249,
+                            "name": "manhattan, ny"
+                        },
+                        {
+                            "lat": 40.789545,
+                            "lng": -74.056530,
+                            "name": "seacaucus, nj"
+                        }
+                    ]
+                },
+                {
+                    "type": 2,
+                    "coords": {
+                        "lat": 40.763758,
+                        "lng": -73.991818,
+                        "name": "hells kitchen, ny"
+                    },
+                    "radius": 0.045
+                }
+            ]
+        },
+        {
+            "id": "55555",
+            "name": "Company Name 5",
+            "description": "Description 5",
+            "info": {
+                "address": {
+                    "street": "Address 5",
+                    "city": "City 5",
+                    "state": "State 5",
+                    "zip": "55555",
+                    "country": "Country 5"
+                },
+                "telephone": "Telephone 5",
+                "emailText": "Email 5",
+                "email": "email@email5.com",
+                "webText": "Web 5",
+                "web": "http://www.website5.com"
+            },
+            "category": {
+                "id": "55555",
+                "name": "Category 5",
+                "key": "category5"
+            },
+            "filters": [
+                {
+                    "id": "111111",
+                    "name": "Filter 1",
+                    "key": "filter1e"
+                },
+                {
+                    "id": "222222",
+                    "name": "Filter 2",
+                    "key": "filter1a"
+                }
+            ],
+            "primaryLocation": {
+                "type": 0,
+                "coords": {
+                    "lat": 41.878114,
+                    "lng": -87.629798,
+                    "name": "chicago, il"
+                }
+            },
+            "authorizedLocations": [
+                {
+                    "type": 1,
+                    "coords": [
+                        {
+                            "lat": 41.885032,
+                            "lng": -87.784503,
+                            "name": "oak park, il"
+                        },
+                        {
+                            "lat": 41.845588,
+                            "lng": -87.753945,
+                            "name": "cicero, il"
+                        },
+                        {
+                            "lat": 41.805031,
+                            "lng": -87.869225,
+                            "name": "la grange, il"
+                        }
+                    ]
+                },
+                {
+                    "type": 1,
+                    "coords": [
+                        {
+                            "lat": 41.875032,
+                            "lng": -87.764503,
+                            "name": "near oak park, il"
+                        },
+                        {
+                            "lat": 41.835588,
+                            "lng": -87.743945,
+                            "name": "near cicero, il"
+                        },
+                        {
+                            "lat": 41.795031,
+                            "lng": -87.859225,
+                            "name": "near la grange, il"
+                        }
+                    ]
+                },
+                {
+                    "type": 2,
+                    "coords": {
+                        "lat": 41.719978,
+                        "lng": -87.747953,
+                        "name": "oak lawn, il"
+                    },
+                    "radius": 0.05
+                }
+            ]
+        },
+        {
+            "id": "66666",
+            "name": "Company Name 6",
+            "description": "Description 6",
+            "info": {
+                "address": {
+                    "street": "Address 6",
+                    "city": "City 6",
+                    "state": "State 6",
+                    "zip": "66666",
+                    "country": "Country 6"
+                },
+                "telephone": "Telephone 6",
+                "emailText": "Email 6",
+                "email": "email@email6.com",
+                "webText": "Web 6",
+                "web": "http://www.website6.com"
+            },
+            "category": {
+                "id": "66666",
+                "name": "Category 6",
+                "key": "category6"
+            },
+            "filters": [
+                {
+                    "id": "111111",
+                    "name": "Filter 1",
+                    "key": "filter1d"
+                },
+                {
+                    "id": "222222",
+                    "name": "Filter 2",
+                    "key": "filter1b"
+                }
+            ],
+            "primaryLocation": {
+                "type": 0,
+                "coords": {
+                    "lat": 39.739236,
+                    "lng": -104.990251,
+                    "name": "denver, co"
+                }
+            },
+            "authorizedLocations": [
+                {
+                    "type": 1,
+                    "coords": [
+                        {
+                            "lat": 40.014986,
+                            "lng": -105.270546,
+                            "name": "boulder, co"
+                        },
+                        {
+                            "lat": 39.961376,
+                            "lng": -105.510831,
+                            "name": "nederland, co"
+                        },
+                        {
+                            "lat": 39.796932,
+                            "lng": -105.493885,
+                            "name": "black hawk, co"
+                        },
+                        {
+                            "lat": 39.613321,
+                            "lng": -105.016650,
+                            "name": "littleton, co"
+                        },
+                        {
+                            "lat": 39.580745,
+                            "lng": -104.877173,
+                            "name": "centennial, co"
+                        },
+                        {
+                            "lat": 39.729432,
+                            "lng": -104.831920,
+                            "name": "aurora, co"
+                        },
+                        {
+                            "lat": 39.743544,
+                            "lng": -104.608035,
+                            "name": "watkins, co"
+                        },
+                        {
+                            "lat": 39.856096,
+                            "lng": -104.673738,
+                            "name": "denver int'l airport, co"
+                        }
+                    ]
+                },
+                {
+                    "type": 2,
+                    "coords": {
+                        "lat": 39.372212,
+                        "lng": -104.856090,
+                        "name": "castle rock, co"
+                    },
+                    "radius": 0.3
+                }
+            ]
+        }
+    ]
+}
