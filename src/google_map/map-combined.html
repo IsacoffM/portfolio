@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="prototype">
     <head>
-        <title>Search</title>
+        <title>Map</title>
         <link type="text/css" rel="stylesheet" href='ionicons.min.css' />
         <link type="text/css" rel="stylesheet "href='custom.css' />
     </head>
@@ -9,16 +9,22 @@
     <body>
     <!--********** NEW MAP CONTENT BEGIN **********-->
     <!--content-->
-    <div id="main" class="location-map" onkeypress="handleEnter(event)">
-        <div id="page-selector" class="search-main">
+    <div id="main" class="location-map">
+        <div id="page-selector" class="search-main"> <!--swap class based on dropdown selection-->
             <!--form-->
-            <form action="#" id="search-form" class="search-form search-container" method="get" data-api="http://api.omron.us/locations">
-                <h2 class="title">Find your nearest</h2>
-                <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <form action="#" id="search-form" class="search-container" method="get" data-api="http://api.omron.us/locations"> <!--remove search-form class when map-->
+                <!--main search only text-->
+                <div class="search-only">
+                    <h2 class="title">Find your nearest</h2>
+                    <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                </div>
+                <!--main search only text end-->
                 <div class="form-selection">
                     <div class="form-selections__options">
                         <div class="form-selection__option">
-                            <select name="category" class="category styled-select">
+                            <label for="category" class="hidden" id="category-invalid">Please choose a category.</label>
+                            <select name="category" class="category styled-select" id="category" required>
+                                <option value="" id="placeholder">Please select...</option>
                                 <option value="distributors">Distributors</option>
                                 <option value="sysadmin">System Administrators</option>
                                 <option value="offices">Office Locations</option>
@@ -28,10 +34,14 @@
                             <p class="text">in</p>
                         </div>
                         <div class="form-selection__option">
-                            <input type="text" id="ajax" class="location" list="json-datalist" placeholder="City, state, zip code..." onkeypress="handleEnter(event)" name="location" required>
+                            <label for="location" class="hidden" id="location-invalid">Please choose a location.</label>
+                            <input type="text" id="ajax" class="location" list="json-datalist" placeholder="City, state, zip code..." name="location" required>
                             <datalist id="json-datalist"></datalist>
                             <input type="text" name="coords" id="search-location" class="hidden">
                             <input type="text" name="subcategories" id="subcategories" class="hidden">
+                        </div>
+                        <div class="buttons">
+                            <button type="submit" id="form-submit" class="submit">Search</button>
                         </div>
                     </div>
                 </div>
@@ -156,7 +166,7 @@
                             </div>
                             <div class="buttons">
                                 <button type="reset" class="filter-reset"><span><strong>x</strong></span> Clear All</button>
-                                <!--<button type="submit" class="filter-apply">Apply</button>-->
+                                <button type="submit" class="filter-apply map-only">Apply</button>
                             </div>
                         </div>
                     </div>
@@ -166,10 +176,17 @@
                     </div>
                 </div>
                 <!--filters accordion end-->
+
+                <!--map-->
+                <div class="map-container map-only">
+                    <div id="map-title" class="map-title distributor-only">Distributor Area for <span></span></div>
+                    <div class="map-wrapper">
+                        <div id="map" class="map" data-type="authorizedLocations" data-bounds="[[123.4, -123.4],[123.4, -123.4]]" data-localization="123"></div>
+                        <div id="json" class="json map-only"></div>
+                    </div>
                     
-                <div class="buttons">
-                    <button type="submit" id="form-submit" class="submit" onsubmit="getGeocode();">Search</button>
                 </div>
+                <!--map end-->
             </form>
             <!--form end-->
         </div>
