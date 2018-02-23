@@ -10,14 +10,15 @@
     <!--********** NEW MAP CONTENT BEGIN **********-->
     <!--content-->
     <div id="main" class="location-map" onkeypress="handleEnter(event)">
-        <div id ="page-selector" class="distributor-map">
+        <div id="page-selector" class="distributor-map">
             <!--form-->
-            <form action="#" id="search-form" class="search-container" method="get">
+            <form action="#" id="search-form" class="search-container" method="get" data-api="http://api.omron.us/locations">
                 <div class="form-selection">
                     <div class="form-selections__options">
                         <div class="form-selection__option">
                             <select id="search-category" name="category" class="category styled-select">
                                 <option value="distributors">Distributors</option>
+                                <option value="sysadmin">System Administrators</option>
                                 <option value="offices">Office Locations</option>
                             </select>
                         </div>
@@ -27,7 +28,8 @@
                         <div class="form-selection__option">
                             <input type="text" id="ajax" class="location" list="json-datalist" placeholder="City, state, zip code..." required>
                             <datalist id="json-datalist"></datalist>
-                            <input type="text" name="location" id="search-location" class="hidden"> 
+                            <input type="text" name="location" id="search-location" class="hidden">
+                            <input type="text" name="subcategories" id="subcategories" class="hidden">
                         </div>
                         <div class="buttons">
                             <button type="submit" id="form-submit" class="submit">Search</button>
@@ -35,149 +37,148 @@
                     </div>
                 </div>
                 <h3 class="filter-title"><span class="filter-title-text">Open Filters</span> <span class="filter-arrow down">&#9660;</span></h3>
+                <!--filters accordion-->
+                <div id="filters" class="filter-container hide" style="display: none;">
+                    <div class="top-section">
+                        <div class="left-section"></div>
+                        <div class="right-section"></div>
+                    </div>
+                    <div class="content">
+                        <form action="#" class="form-container" method="get">
+                            <div class="filter-selection">
+                                <div id="filter" class="filter-selection__filters">
+                                    <ul>
+                                        <li>
+                                            <h3>Certification/Technology</h3>
+                                            <ul>
+                                                <li>
+                                                    <input type="checkbox" id="filter1a" value="filter1a" class="check">
+                                                    <label for="filter1a">SYSMAC</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter1b" value="filter1b" class="check">
+                                                    <label for="filter1b">Vision</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter1c" value="filter1c" class="check">
+                                                    <label for="filter1c">Motion</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter1d" value="filter1d" class="check">
+                                                    <label for="filter1d">Safety</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter1e" value="filter1e" class="check">
+                                                    <label for="filter1e">Detention</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter1f" value="filter1f" class="check">
+                                                    <label for="filter1f">Fixed Robot</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter1g" value="filter1g" class="check">
+                                                    <label for="filter1g">Mobile Robot</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter1h" value="filter1h" class="check">
+                                                    <label for="filter1h">DeltaTau</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter1i" value="filter1i" class="check">
+                                                    <label for="filter1i">Microscan</label>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <h3>Industry</h3>
+                                            <ul>
+                                                <li>
+                                                    <input type="checkbox" id="filter2a" value="filter2a" class="check">
+                                                    <label for="filter2a">F&amp;B Packaging</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter2b" value="filter2b" class="check">
+                                                    <label for="filter2b">Semiconductor</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter2c" value="filter2c" class="check">
+                                                    <label for="filter2c">Pharma</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter2d" value="filter2d" class="check">
+                                                    <label for="filter2d">Safety</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter2e" value="filter2e" class="check">
+                                                    <label for="filter2e">Automotive</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter2f" value="filter2f" class="check">
+                                                    <label for="filter2f">Infrastructure</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter2g" value="filter2g" class="check">
+                                                    <label for="filter2g">Oil &amp; Gas</label>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <h3>Filter Column 3</h3>
+                                            <ul>
+                                                <li>
+                                                    <input type="checkbox" id="filter3a" value="filter3a" class="check">
+                                                    <label for="filter3a">Filter 3a</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter3b" value="filter3b" class="check">
+                                                    <label for="filter3b">Filter 3b</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter3c" value="filter3c" class="check">
+                                                    <label for="filter3c">Filter 3c</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter3d" value="filter3d" class="check">
+                                                    <label for="filter3d">Filter 3d</label>
+                                                </li>
+                                            </ul>
+                                            <h3>Filter Column 4</h3>
+                                            <ul>
+                                                <li>
+                                                    <input type="checkbox" id="filter4a" value="filter4a" class="check">
+                                                    <label for="filter4a">Filter 4a</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" id="filter4b" value="filter4b" class="check">
+                                                    <label for="filter4b">Filter 4b</label>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="buttons">
+                                        <button type="reset" class="filter-reset"><span><strong>x</strong></span> Clear All</button>
+                                    <button type="submit" class="filter-apply">Apply</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="bottom-section">
+                        <div class="left-section"></div>
+                        <div class="right-section"></div>
+                    </div>
+                </div>
+                <!--filters accordion end-->
+
+                <!--map-->
+                <div class="map-container">
+                    <div id="json" class="json"></div>
+                    <div id="map-title" class="map-title">Distributor Area for <span></span></div>
+                    <div id="map" class="map" data-type="authorizedLocations" data-bounds="[[123.4, -123.4],[123.4, -123.4]]" data-localization="123"></div>
+                </div>
+                <!--map end-->
             </form>
             <!--form end-->
-
-            <!--filters accordion-->
-            <div id="filters" class="filter-container hide" style="display: none;">
-                <div class="top-section">
-                    <div class="left-section"></div>
-                    <div class="right-section"></div>
-                </div>
-                <div class="content">
-                    <form action="#" class="form-container" method="get">
-                        <div class="filter-selection">
-                            <div id="filter" class="filter-selection__filters">
-                                <ul>
-                                    <li>
-                                        <h3>Certification/Technology</h3>
-                                        <ul>
-                                            <li>
-                                                <input type="checkbox" id="filter1a" value="filter1a" class="check">
-                                                <label for="filter1a">SYSMAC</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter1b" value="filter1b" class="check">
-                                                <label for="filter1b">Vision</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter1c" value="filter1c" class="check">
-                                                <label for="filter1c">Motion</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter1d" value="filter1d" class="check">
-                                                <label for="filter1d">Safety</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter1e" value="filter1e" class="check">
-                                                <label for="filter1e">Detention</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter1f" value="filter1f" class="check">
-                                                <label for="filter1f">Fixed Robot</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter1g" value="filter1g" class="check">
-                                                <label for="filter1g">Mobile Robot</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter1h" value="filter1h" class="check">
-                                                <label for="filter1h">DeltaTau</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter1i" value="filter1i" class="check">
-                                                <label for="filter1i">Microscan</label>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <h3>Industry</h3>
-                                        <ul>
-                                            <li>
-                                                <input type="checkbox" id="filter2a" value="filter2a" class="check">
-                                                <label for="filter2a">F&amp;B Packaging</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter2b" value="filter2b" class="check">
-                                                <label for="filter2b">Semiconductor</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter2c" value="filter2c" class="check">
-                                                <label for="filter2c">Pharma</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter2d" value="filter2d" class="check">
-                                                <label for="filter2d">Safety</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter2e" value="filter2e" class="check">
-                                                <label for="filter2e">Automotive</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter2f" value="filter2f" class="check">
-                                                <label for="filter2f">Infrastructure</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter2g" value="filter2g" class="check">
-                                                <label for="filter2g">Oil &amp; Gas</label>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <h3>Filter Column 3</h3>
-                                        <ul>
-                                            <li>
-                                                <input type="checkbox" id="filter3a" value="filter3a" class="check">
-                                                <label for="filter3a">Filter 3a</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter3b" value="filter3b" class="check">
-                                                <label for="filter3b">Filter 3b</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter3c" value="filter3c" class="check">
-                                                <label for="filter3c">Filter 3c</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter3d" value="filter3d" class="check">
-                                                <label for="filter3d">Filter 3d</label>
-                                            </li>
-                                        </ul>
-                                        <h3>Filter Column 4</h3>
-                                        <ul>
-                                            <li>
-                                                <input type="checkbox" id="filter4a" value="filter4a" class="check">
-                                                <label for="filter4a">Filter 4a</label>
-                                            </li>
-                                            <li>
-                                                <input type="checkbox" id="filter4b" value="filter4b" class="check">
-                                                <label for="filter4b">Filter 4b</label>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="buttons">
-                                    <button type="reset" class="filter-reset"><span><strong>x</strong></span> Clear All</button>
-                                <button type="submit" class="filter-apply">Apply</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="bottom-section">
-                    <div class="left-section"></div>
-                    <div class="right-section"></div>
-                </div>
-            </div>
-            <!--filters accordion end-->
-
-            <!--map-->
-            <div class="map-container">
-                <div id="json" class="json"></div>
-                <div id="map-title" class="map-title">Distributor Area for <span></span></div>
-                <div id="map" class="map"></div>
-            </div>
-            <!--map end-->
         </div>
     </div>
     <!--content end-->
