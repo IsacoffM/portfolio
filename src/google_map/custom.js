@@ -1,6 +1,10 @@
 //*********************************//
 // form script - location autofill //
 //*********************************//
+//                                 //
+// TODO - rework to use geocoding  //
+//                                 //
+//*********************************//
 
 // get the datalist and input elements
 var dataList = document.getElementById('json-datalist');
@@ -33,65 +37,127 @@ request.onreadystatechange = function(response) {
 request.open('GET', 'locations.json', true);
 request.send();
 
+//*******************************************//
+// search dropdown and submit button scripts //
+//*******************************************//
+
+// swap classes and generate map type based on dropdown selection when submit button clicked
+function swapMaps() {
+    var pageType = document.getElementById("category").value;
+    var pageSelector = document.getElementById("page-selector");
+    var pageSelectorClass = pageSelector.className;
+    var locationValue = document.getElementById("ajax").value;
+        officePage = "offices";
+        distributorPage = "distributors";
+        sysadminPage = "sysadmin";
+    // change to office page type
+    if (pageType === officePage) {
+        $(pageSelector).removeClass(pageSelectorClass).addClass("office-map");
+        deleteJson();
+        createFirstMap();
+    }
+    // change to distributor page type
+    else if (pageType === distributorPage || pageType === sysadminPage) {
+        $(pageSelector).removeClass(pageSelectorClass).addClass("distributor-map");
+        deleteJson();
+        createFirstMap();
+    }
+    // if placeholder selected do nothing
+    else {
+        return;
+    }
+}
+
+// validate form fields
+function validateForm() {
+    var category = document.getElementById("category");
+    var ajax = document.getElementById("ajax");
+    var categoryValue = category.value;
+    var ajaxValue = ajax.value;
+
+    $(category).removeClass("invalid");
+    $(ajax).removeClass("invalid");
+    $("#category-invalid").removeClass("show").addClass("hidden");
+    $("#location-invalid").removeClass("show").addClass("hidden");
+
+    if (categoryValue.length < 1 || ajaxValue.length < 1) {
+        if (categoryValue.length < 1) {
+            $(category).addClass("invalid");
+            $("#category-invalid").removeClass("hidden").addClass("show");
+        }
+        if (ajaxValue.length < 1) {
+            $(ajax).addClass("invalid");
+            $("#location-invalid").removeClass("hidden").addClass("show");
+        }
+        isInvalid = true;
+    } else {
+        isInvalid = false;
+    }
+}
+
+// run functions when submit button clicked
+$("#form-submit").click(function(event) {
+    event.preventDefault();
+    getGeocode();
+    validateForm();
+    if (isInvalid === false) {
+        if ($(filters).hasClass("show")) {
+            showFilters();
+        }
+        swapMaps();
+    }
+});
+
+$("#category").change(function() {
+    $("#placeholder").attr("disabled", true);
+});
 
 //**********************//
 // filters array script //
 //**********************//
 
-// add class to checkboxes if checked
+subCategories = [];
+subcategoryField = document.getElementById("subcategories");
+
 $('#filter .check').change(function(){
+    // if checked, add class and add to array
     if($(this).is(":checked")) {
         $(this).addClass("checked");
-    } else {
+        subCategories.push(this.value);
+    }
+    // if unchecked, remove class and remove from array
+    else {
         $(this).removeClass("checked");
+        var subcategoryValue = this.value;
+        var subcategoryIndex = subCategories.indexOf(subcategoryValue);
+        if (subcategoryIndex > -1) {
+            subCategories.splice(index, 1);
+        }
     }
+    // update subcategory field with array
+    subcategoryField.value = subCategories;
 });
-
-// add filter array when submit button clicked
-/* $('.submit').click(function(){
-    // set filter 1
-    var filter1 = document.getElementById("filter1");
-    if ($(filter1).hasClass("checked")) {
-        var filters1 = filter1.value + ";";
-    } else {
-        var filters1 = "";
-    }
-    // set filter 2
-    var filter2 = document.getElementById("filter2");
-    if ($(filter2).hasClass("checked")) {
-        var filters2 = filter2.value + ";";
-    } else {
-        var filters2 = "";
-    }
-    // set filter 3
-    var filter3 = document.getElementById("filter3");
-    if ($(filter3).hasClass("checked")) {
-        var filters3 = filter3.value + ";";
-    } else {
-        var filters3 = "";
-    }
-    // log filter array
-    if (filters1.length > 0 || filters2.length > 0 || filters3.length > 0) {
-        var filters = filters1+filters2+filters3;
-    } else {
-        var filters = "";
-    }
-    // append filters hidden input
-    $('#filters').val(filters);
-    // remove individual checkboxes from form submit
-});
-*/
 
 //**************************//
 // filter accordion scripts //
 //**************************//
 
-var filters = document.getElementById("filters");
-var filterTitle = document.getElementsByClassName("filter-title-text");
-var filterArrow = document.getElementsByClassName("filter-arrow");
-var showText = "Open Filters";
-var hideText = "Close Filters";
+filters = document.getElementById("filters");
+filterTitle = document.getElementsByClassName("filter-title-text");
+filterArrow = document.getElementsByClassName("filter-arrow");
+showText = "Open Filters";
+hideText = "Close Filters";
 
+function resetFilters() {
+    filterChecks = document.getElementsByClassName("check");
+    if ($(filterChecks).is(":checked")) {
+        $(filterChecks).attr("checked", false);
+        $(filterChecks).removeClass("checked");
+        subCategories = [];
+    }
+}
+
+// show/hide filter menu
 function showFilters() {
     if ($(filters).hasClass("show")) {
         $(filters).removeClass("show").addClass("hide").slideUp();
@@ -104,32 +170,77 @@ function showFilters() {
     }
 }
 
+// run function when filter title is clicked
 $(filterTitle).click(function() {
     showFilters();
 });
 
+// reset form on page reload
+$(document).ready(function() {
+    $("#search-form").each(function() { this.reset() });
+});
+
+// apply filters on current json - TODO - need to rework with progressive enhancement
 $(".filter-apply").click(function(event) {
     event.preventDefault();
-    deleteMarkers();
-    deleteJson();
-    jsonGet();
-    getMainMap();
-    showFilters();
+    validateForm();
+    if (isInvalid === false) {
+        deleteMarkers();
+        deleteJson();
+        jsonGet();
+        getMainMap();
+        showFilters();
+    }
 });
 
-$(".filter-reset").click(function() {
-    filterChecks = document.getElementsByClassName("checked");
-    $(filterChecks).removeClass("checked");
+// clear checks when filter reset button clicked
+$(".filter-reset").click(function(event) {
+    event.preventDefault();
+    resetFilters();
 });
 
-//******************//
-// dropdown scripts //
-//******************//
+//*******************//
+// geocoding scripts //
+//*******************//
 
-/* $("#search-category").change(function() {
-    category = document.getElementById("search-category");
-    console.log(category);
-}); */
+// transform text location to coordinates via geocoding
+function getGeocode() {
+    // set variables
+    address = document.getElementById("ajax").value;
+    hiddenField = document.getElementById("search-location");
+    apiKey = "AIzaSyCieSeYgDRHLm8RFgv0ibDtnu3ncS0373I";
+    geoJson = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=" + apiKey;
+
+    // get json from google api
+    $.getJSON(geoJson, function(geoJson1) {
+        var neLat = geoJson1.results[0].geometry.bounds.northeast.lat;
+        var neLng = geoJson1.results[0].geometry.bounds.northeast.lng;
+        var swLat = geoJson1.results[0].geometry.bounds.southwest.lat;
+        var swLng = geoJson1.results[0].geometry.bounds.southwest.lng;
+            geoCoords = "LatMax=" + neLat + ";LngMax=" + neLng + ";LatMin=" + swLat + ";LngMin=" + swLng;
+        hiddenField.value = geoCoords;
+    });
+}
+
+// set geolocation based on browser location
+function setGeolocation() {
+    // if browser supports geolocation
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            infowindow.setPosition(pos);
+            map.setCenter(pos);
+        });
+    } else {
+        // if browser doesn't support geolocation
+        console.log('Geolocation not supported');
+        return;
+    }
+}
 
 //*************//
 // map scripts //
@@ -137,16 +248,16 @@ $(".filter-reset").click(function() {
 
 // set global variables
 var map;
-var json = "results.json";
+var json = "results.json"; // TODO - static json - will need to replace with data-api results instead
 var infowindow = new google.maps.InfoWindow();
     showMap = document.getElementById("showMap");
     officeMap = document.getElementsByClassName("office-map");
     distributorMap = document.getElementsByClassName("distributor-map");
     searchMain = document.getElementsByClassName("search-main");
     breakPoint = "<br />";
-    // set default location as dallas, tx
-    lat = 32.776664;
-    lng = -96.796988;
+    // set default location coords as blank - need to rework to include default location based on geocoded search result
+    lat = "";
+    lng = "";
 
 // add active name to map title
 function addActiveName() {
@@ -263,18 +374,19 @@ function deleteJson() {
     $("#json").replaceWith('<div id="json" class="json"></div>');
 }
 
-// get primary location markers and generate map
+// get primary location markers and generate map - TODO - rework to remove HTML elements and append data instead
 function getMainMap() {
     // loop through json
     $.getJSON(json, function(json1) {
         console.log("Getting map markers...");
         $.each(json1.results, function (key, data) {
             // set marker for only active selection
-            var activeResult = document.getElementsByClassName("activeResult");
+            activeResult = document.getElementsByClassName("activeResult");
             var stringResult = activeResult[0].id;
             var idResult = data.id;
-            // generate main map markers
-            if (officeMap.length > 0 || (distributorMap.length > 0 && stringResult === idResult) ) {
+
+            // plot map marker(s)
+            function makeMap() {
                 var latLng = new google.maps.LatLng(data.primaryLocation.coords.lat, data.primaryLocation.coords.lng);
                     mainMarker = new google.maps.Marker({
                     position: latLng,
@@ -287,7 +399,7 @@ function getMainMap() {
                 address = '<div class="company company-address">' + data.info.address.street + " " + data.info.address.city + " " + data.info.address.state + " " + data.info.address.zip + ", " + data.info.address.country + "</div>";
                 telephone = '<div class="company company-phone"><i class="icon ion-ios-telephone"></i>' + data.info.telephone + "</div>";
                 email = '<div class="company company-email"><i class="icon ion-ios-paperplane"></i><a href="mailto:' + data.info.email + '">' + data.info.emailText + '</a></div>';
-                web = '<div class="company company-website"><i class="icon ion-ios-world"></i><a href="' + data.info.web + '">' + data.info.webText + '</a></div>';
+                web = '<div class="company company-website"><i class="icon ion-ios-world"></i><a target="_blank" href="' + data.info.web + '">' + data.info.webText + '</a></div>';
                 // generate infoWindow
                 if (distributorMap.length > 0) {
                     details = company;
@@ -301,8 +413,36 @@ function getMainMap() {
                     infowindow.open(map, mainMarker);
                 }
             }
+
+            // check for filters on office map to restrict markers to array
+            if (officeMap.length > 0 || (distributorMap.length > 0 && stringResult === idResult) ) {
+                filterMatch = false;
+                if (officeMap.length > 0) {
+                    // filters check
+                    var filterResults = data.filters;
+                    var checkedFilters = document.getElementsByClassName("checked");
+                    if (checkedFilters.length > 0) {
+                        $.each(filterResults, function (key, data) {
+                            var filterKey = data.key;
+                            $.each(checkedFilters, function(key, data) {
+                                var checkedFilter = data.id;
+                                if (checkedFilter === filterKey) {
+                                    makeMap();
+                                }
+                            });
+                        });
+                    } else {
+                        makeMap();
+                    }
+                }
+                // if not office map, plot markers normally
+                else {
+                    makeMap();
+                }
+            }
         });
     });
+    //if distributor map, get resellers
     if (distributorMap.length > 0) {
         getResellers();
     };
@@ -317,7 +457,7 @@ function getResellers() {
             // set distributor area for only active selection
             var activeResult = document.getElementsByClassName("activeResult");
             var stringResult = activeResult[0].id;
-            console.log(stringResult);
+
             if (stringResult === data.id) {
                 //loop through authorized locations
                 var authorizedLocations = data.authorizedLocations;
@@ -368,7 +508,7 @@ function getResellers() {
     });
 }
 
-// get JSON data and append to page
+// get JSON data and append to page - TODO - rework to remove HTML elements and append data instead
 function jsonGet() {
     $.getJSON(json, function(json1) {
         console.log("Getting JSON data...");
@@ -381,7 +521,7 @@ function jsonGet() {
             address = '<div class="company company-address">' + data.info.address.street + " " + data.info.address.city + " " + data.info.address.state + " " + data.info.address.zip + ", " + data.info.address.country + "</div>",
             telephone = '<div class="company company-phone"><i class="icon ion-ios-telephone"></i>' + data.info.telephone + "</div>",
             email = '<div class="company company-email"><i class="icon ion-ios-paperplane"></i><a href="mailto:' + data.info.email + '">' + data.info.emailText + '</a></div>',
-            web = '<div class="company company-website"><i class="icon ion-ios-world"></i><a href="' + data.info.web + '">' + data.info.webText + '</a></div>',
+            web = '<div class="company company-website"><i class="icon ion-ios-world"></i><a target="_blank" href="' + data.info.web + '">' + data.info.webText + '</a></div>',
             filterDiv = '<div id="filter' + locationId + '" class="company company-filter hidden"><strong>Filters:</strong> </div>',
             category = '<div class="company company-category hidden"><strong>Category:</strong> ' + data.category.name + "</div>",
             primaryLocation = '<div class="company company-location hidden"><strong>Primary Location:</strong><br />' + '<div class="lat">' + data.primaryLocation.coords.lat + '</div><div class="lng">' + data.primaryLocation.coords.lng + "</div>",
@@ -401,6 +541,7 @@ function jsonGet() {
                         }
                     });
                 });
+                console.log("Filters selected.");
             } else {
                 console.log("No filters selected.");
             }
@@ -453,63 +594,4 @@ function setActiveClass(event) {
     centerMap(lat,lng);
     deleteMarkers();
     getMainMap();
-}
-
-// set geolocation based on browser location
-function setGeolocation() {
-    // if browser supports geolocation
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-
-            infowindow.setPosition(pos);
-            map.setCenter(pos);
-        });
-    } else {
-        // if browser doesn't support geolocation
-        console.log('Geolocation not supported');
-        return;
-    }
-}
-
-// geocoding scripts
-function getGeocode() {
-    var address = document.getElementById("ajax").value;
-    var hiddenField = document.getElementById("search-location");
-        apiKey = "AIzaSyCieSeYgDRHLm8RFgv0ibDtnu3ncS0373I";
-        geoJson = "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=" + apiKey;
-    $.getJSON(geoJson, function(geoJson1) {
-        var neLat = geoJson1.results[0].geometry.bounds.northeast.lat;
-        var neLng = geoJson1.results[0].geometry.bounds.northeast.lng;
-        var swLat = geoJson1.results[0].geometry.bounds.southwest.lat;
-        var swLng = geoJson1.results[0].geometry.bounds.southwest.lng;
-        var geoCoords = "[(" + neLat + "," + neLng + "),(" + swLat + "," + swLng + ")]";
-        hiddenField.value = geoCoords;
-        console.log(hiddenField.value);
-    });
-}
-
-// handle enter key press
-function handleEnter(e){
-    var keycode = (e.keyCode ? e.keyCode : e.which);
-    if (keycode == '13') {
-        console.log("Enter");
-        getGeocode();
-    }
-}
-
-$("#ajax").blur(function() {
-    getGeocode();
-});
-
-$("#search-form").submit(function() {
-    getGeocode();
-});
-
-// run function when page loads
-if (searchMain.length < 1) {
-    google.maps.event.addDomListener(window, 'load', createFirstMap);
 }
