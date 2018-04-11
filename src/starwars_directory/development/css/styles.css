@@ -1,0 +1,122 @@
+/************/
+/** styles **/
+/************/
+
+@font-face {
+    font-family: 'STARWARS';
+    src: url('../fonts/STARWARS.woff2') format('woff2'),
+        url('../fonts/STARWARS.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
+
+.directory,
+.person > .stats,
+.details,
+.people .btn {
+    font-family: 'Courier New', Courier, Arial, sans-serif;
+}
+
+.starwars,
+.people {
+    position: relative;
+    font-family: 'starwars';
+}
+
+.people > ul {
+    margin: 0;
+    padding: 0;
+}
+
+.people li {
+    list-style: none;
+}
+
+.details {
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+    border-radius: 0 0 15px 15px;
+    padding: 15px;
+    background-color: #eeeeee;
+    transition: all 0.2s ease;
+}
+
+.details > .starwars {
+    text-align: center;
+}
+
+.details hr {
+    border-color: #000000;
+}
+
+.person > .name,
+.person > .stats {
+    border: 1px solid gray;
+    clear: both;
+}
+
+.person > .stats {
+    margin-bottom: 0;
+}
+
+.person > .name {
+    cursor: pointer;
+    margin-bottom: 0;
+    border-bottom: 0;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 5px 15px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.name .icon {
+    width: 0px;
+    height: 0px;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-top: 11px solid #cccccc;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+.name.active .icon {
+    transform: rotate(180deg);
+}
+
+.pagination .btn {
+    text-transform: uppercase;
+}
+
+.pagination li:first-of-type {
+    display: block;
+    float: left;
+}
+
+.pagination li:last-of-type {
+    display: block;
+    float: right;
+}
+
+@media screen and (min-width: 768px) {
+    .details {
+        position: absolute;
+        top: 0;
+        border-top: 1px solid gray;
+        border-radius: 15px;
+    }
+
+    .name.active .icon {
+        transform: rotate(-90deg);
+    }
+
+    .person > .stats {
+        margin-bottom: 10px;
+    }
+}
