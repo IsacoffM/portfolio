@@ -1,4 +1,4 @@
-<html ng-app="swApp">
+<html ng-app="swApp" class="background">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,16 +17,33 @@
         $http.get('https://swapi.co/api/people').success(function(data) {
           $scope.people = data.results;
           $scope.swApi = data;
+          $('.loading').toggle();
+          $('.pagination').toggle();
         });
       });
     </script>
   </head>
-  <body ng-controller="SwCtrl">
+  <body ng-controller="SwCtrl" class="transparent">
 
     <div class="container directory">
-	    <h1>GALACTIC DIRECTORY</h1>
+	    <h1 class="header">
+        <i class="icon">
+          <img src="images/rebel.png" alt="Rebel" title="Rebel Logo" />
+        </i>
+        <span>GALACTIC DIRECTORY</span>
+        <i class="icon">
+            <img src="images/empire.png" alt="Empire" title="Empire Logo" />
+          </i>
+      </h1>
       <hr>
       <h2>PEOPLE OF INTEREST</h2>
+      <div class="loading col-sm-5 col-xs-12" style="display: block;">
+        <img class="rotating" src="images/vader.png" alt="Loading..." title="Loading"/>
+      </div>
+      <div class="avatar col-sm-6 col-xs-12 col-sm-push-6">
+        <img src="images/avatar.png" alt="Avatar" title="Avatar" />
+        <h3 class="avatar-text" style="display:block;">Please select a person from the left to display their statistics.</h3>
+      </div>
       <div class="people">
         <ul>
           <li ng-repeat="person in people" class="person clearfix">
@@ -45,7 +62,7 @@
               <p><strong>Gender:</strong> {{person.gender}}</p>
             </div>
           </li>
-          <ul class="pagination col-sm-5 col-xs-12">
+          <ul class="pagination col-sm-5 col-xs-12" style="display: none;">
             <li><a class="btn btn-lg" ng-class="swApi.previous === null ? 'disabled' : 'active'" data-url="{{swApi.previous}}" href="#" onClick="getResults(event);">Prev</a></li>
             <li><a class="btn btn-lg" ng-class="swApi.next === null ? 'disabled' : 'active'" data-url="{{swApi.next}}" href="#" onClick="getResults(event);">Next</a></li>
           </ul>
