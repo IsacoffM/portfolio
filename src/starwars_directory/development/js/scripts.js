@@ -3,6 +3,12 @@
 /*************/
 
 function getData(apiUrl) {
+    // toggle loading container
+    $('.loading').toggle();
+    
+    //show avatar text
+    $('.avatar-text').attr("style", "display: block;");
+
     // get json results
     $.getJSON( apiUrl, function( data ) {
         // declare variables
@@ -48,7 +54,7 @@ function getData(apiUrl) {
         $( '<ul>', {
         html: items.join( "" )
         }).appendTo( ".people" );
-
+        $('.loading').toggle();
     });
 }
 
@@ -69,18 +75,25 @@ function getDetails(event) {
     console.log("Getting details...");
     // declare variables
     var details = $(event.target).siblings('.details');
+
     // check if active already
     if ($(event.target).hasClass("active")) {
         $(event.target).removeClass("active");
-        $(details).slideToggle();
+        $(details).slideToggle(300,"linear");
+        $('.avatar-text').slideToggle(300);
     } else {
         // update styles
         $('.details').attr("style", "display: none;");
+        // hide avatar text
+        if ($('.name').hasClass("active")) {
+        } else {
+            $('.avatar-text').slideToggle(300);
+        }
         // remove active class
-        $(".name").removeClass("active");
+        $('.name').removeClass("active");
         // add active class to target
         $(event.target).addClass("active");
         // toggle details
-        $(details).slideToggle();
+        $(details).slideToggle(300,"linear");
     }
 }
