@@ -1,0 +1,56 @@
+{
+  "tasks": [
+    {
+      "text": "Phone Interview with Ryan",
+      "day": "Monday 5/3 5pm ET",
+      "reminder": false,
+      "id": 1
+    },
+    {
+      "text": "Video Interview with Kharis",
+      "day": "Thursday 5/13 4pm ET",
+      "reminder": true,
+      "id": 2
+    },
+    {
+      "text": "Final Interview",
+      "day": "Wednesday 5/26 @ 2pm ET",
+      "reminder": true,
+      "id": 3
+    },
+    {
+      "text": "Accept Offer",
+      "day": "Monday 5/31 @ 12pm ET",
+      "reminder": true,
+      "id": 4
+    },
+    {
+      "text": "Start Work @ LogMeIn",
+      "day": "Tuesday 6/1 @ 8am ET",
+      "reminder": true,
+      "id": 5
+    }
+  ],
+  "skillsets": [
+    {
+      "id": 1,
+      "skill": "Team Leadership"
+    },
+    {
+      "id": "2",
+      "skill": "Front End Web Development"
+    },
+    {
+      "id": "3",
+      "skill": "Product Ownership"
+    },
+    {
+      "id": "4",
+      "skill": "Project Management"
+    },
+    {
+      "id": "5",
+      "skill": "CMS Administration"
+    }
+  ]
+}

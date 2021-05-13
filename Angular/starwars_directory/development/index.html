@@ -1,0 +1,76 @@
+<html ng-app="swApp" class="background">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic Directory</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+	  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script>
+      // api
+      var swApp = angular.module('swApp', []);
+      swApp.controller('SwCtrl', function ($scope, $http){
+        $http.get('https://swapi.co/api/people').success(function(data) {
+          $scope.people = data.results;
+          $scope.swApi = data;
+          $('.loading').toggle();
+          $('.pagination').toggle();
+        });
+      });
+    </script>
+  </head>
+  <body ng-controller="SwCtrl" class="transparent">
+
+    <div class="container directory">
+	    <h1 class="header">
+        <i class="icon">
+          <img src="images/rebel.png" alt="Rebel" title="Rebel Logo" />
+        </i>
+        <span>GALACTIC DIRECTORY</span>
+        <i class="icon">
+            <img src="images/empire.png" alt="Empire" title="Empire Logo" />
+          </i>
+      </h1>
+      <hr>
+      <h2>PEOPLE OF INTEREST</h2>
+      <div class="loading col-sm-5 col-xs-12" style="display: block;">
+        <img class="rotating" src="images/vader.png" alt="Loading..." title="Loading"/>
+      </div>
+      <div class="avatar col-sm-6 col-xs-12 col-sm-push-6">
+        <img src="images/avatar.png" alt="Avatar" title="Avatar" />
+        <h3 class="avatar-text" style="display:block;">Please select a person from the left to display their statistics.</h3>
+      </div>
+      <div class="people">
+        <ul>
+          <li ng-repeat="person in people" class="person clearfix">
+            <h3 class="name col-sm-5 col-xs-12"onClick="getDetails(event);">{{person.name}}<i class="icon"></i></h3>
+            <p class="stats col-sm-5 col-xs-12"><strong>Gender:</strong> {{person.gender}} | <strong>Height:</strong> {{person.height}} | <strong>Birth Year</strong> {{person.birth_year}}</p>
+            <div class="details col-sm-6 col-xs-12 col-sm-push-6" style="display: none;">
+              <h3 class="starwars">STATISTICS</h3>
+              <hr>
+              <p><strong>Name:</strong> {{person.name}}</p>
+              <p><strong>Height:</strong> {{person.height}}</p>
+              <p><strong>Mass:</strong> {{person.mass}}</p>
+              <p><strong>Hair Color:</strong> {{person.hair_color}}</p>
+              <p><strong>Skin Color:</strong> {{person.skin_color}}</p>
+              <p><strong>Eye Color:</strong> {{person.eye_color}}</p>
+              <p><strong>Birth Year:</strong> {{person.birth_year}}</p>
+              <p><strong>Gender:</strong> {{person.gender}}</p>
+            </div>
+          </li>
+          <ul class="pagination col-sm-5 col-xs-12" style="display: none;">
+            <li><a class="btn btn-lg" ng-class="swApi.previous === null ? 'disabled' : 'active'" data-url="{{swApi.previous}}" href="#" onClick="getResults(event);">Prev</a></li>
+            <li><a class="btn btn-lg" ng-class="swApi.next === null ? 'disabled' : 'active'" data-url="{{swApi.next}}" href="#" onClick="getResults(event);">Next</a></li>
+          </ul>
+        </ul>
+      </div>
+    </div>
+
+    <script src="js/scripts.js"></script>
+
+  </body>
+</html>
